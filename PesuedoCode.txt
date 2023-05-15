@@ -1,0 +1,59 @@
+objet userOne:
+	String userId;
+	int age;
+	bool isRestricted;
+	bool isSuspended;
+	bool isVerified;
+	bool hasValidDevice;
+	int numFollowers;
+	int numFollowings;
+	bool deactivated;
+
+fonction main{
+	returnedMass = getUserMass(userData);
+	print(returnedMass);
+}
+
+
+
+
+fonction getUserMass(userData){
+	constantDivisionFactorGt_threshFriendsToFollowersRatioUMass = 5;
+	threshAbsNumFriendsUMass = 500;
+	threshFriendsToFollowersRatioMass = 0.6;
+	deviceWeightAdditive = 0.5;
+	ageWeightAdditive = 0.2;
+	restrictedWeightMultiplicative = 0.1;
+
+	int mass = 0;
+
+	SI(userId ==""): retourne null;
+	SINON:
+		SI (isSuspended) : faire mass = 0;
+		SINON SI (isVerified) : faire mass = 100;
+		SINON:
+			FAIRE: double score = deviceWeightAdditive * 0.1;
+
+			SI(hasValidDevice) : FAIRE score += deviceWeightAdditive;
+			
+			SI(age > 30): FAIRE normalizedAge = 1;
+			SINON: FAIRE normalizedAge = min(1 , ln(1+age/15));
+			
+			score *= normalizedAge;
+
+			SI(score < 0.01): FAIRE score = 0.01;
+
+			SI(isRestricted): FAIRE score* = restrictedWeightMultiplicative;
+
+			score *= 100;
+			mass = score;
+
+		friendToFollowersRatio = (1+numFollowings)/(1+numFollowers);
+		
+		adjustedMass = mass;
+
+		SI (numFollowings > threshAbsNumFriendsUMass ET friendToFollowersRatio > threshFriendsToFollowersRatioMass):
+			FAIRE adjustedMass = mass / exp(constantDivisionFactorGt_threshFriendsToFollowersRatioUMass * (friendToFollowersRatio - threshFriendsToFollowersRatioMass));
+
+		RETOURNE adjustedMass;
+}
