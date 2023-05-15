@@ -3,15 +3,15 @@
 traduction en Python du code userMass.scala de twitter avec un objet modifiable pour pouvoir calculer sa masse ("réputation") (https://github.com/twitter/the-algorithm.git)
 Ce code attribue un score de réputation à un utilisateur en fonction des paramètres par défault suivants :
 
-userId | "123"
-age | 50
-isRestricted | False
-isSuspended | False
-isVerified | False
-hasValidDevice | True
-numFollowers | 1000
-numFollowings | 1000
-deactivated | False
+userId | "123"      
+age | 50        
+isRestricted | False          
+isSuspended | False     
+isVerified | False      
+hasValidDevice | True       
+numFollowers | 1000     
+numFollowings | 1000        
+deactivated | False     
 
 Ce score est utilisé pour savoir quels utilisateurs méritents d'être mis en avant plus que d'autres. 
 
